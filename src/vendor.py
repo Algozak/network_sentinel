@@ -10,7 +10,6 @@ class VendorLookup:
         "00:1A:11": "Google",
         "D8:47:32": "TP-Link",
         "AC:AF:B9": "Xiaomi",
-        # Сюда добавим MAC твоего роутера и телефона
     }
 
     @staticmethod

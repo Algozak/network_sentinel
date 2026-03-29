@@ -1,8 +1,10 @@
+from decos import timer_deco
 import subprocess
 import ipaddress
 from concurrent.futures import ThreadPoolExecutor
 import socket
 from vendor import VendorLookup 
+import re
 
 COMMON_PORTS = [21, 22, 23, 25, 53, 80, 110, 135, 139, 443, 445, 3306, 3389, 8080]
 
@@ -12,7 +14,6 @@ class Scanner:
         self.max_workers = max_workers
 
     def _ping(self, ip: str):
-        # -c 1 (1 пакет), -W 1 (таймаут 1 сек)
         command = ['ping', '-c', '1', '-W', str(self.timeout), ip]
         result = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         
@@ -20,12 +21,9 @@ class Scanner:
             return ip
         return None
     def get_mac(self, ip: str):
-        #"""Возвращает MAC-адрес из ARP-таблицы системы"""
-        try:
-            # Вызываем системную команду arp -n [IP]
+        try: 
             output = subprocess.check_output(["arp", "-n", ip], stderr=subprocess.STDOUT).decode()
-            # Ищем в выводе что-то похожее на MAC (XX:XX:XX:XX:XX:XX)
-            import re
+            
             mac = re.search(r"(([a-f0-9]{2}:){5}[a-f0-9]{2})", output)
             return mac.group(0) if mac else "Unknown"
         except:
@@ -33,9 +31,9 @@ class Scanner:
 
     def scan_single_port(self, ip, port):
         """Проверяет один конкретный порт на одном IP."""
-        # AF_INET = IPv4, SOCK_STREAM = TCP
+        
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(0.5)  # Очень важно! Чтобы не ждать долго на закрытых портах
+            s.settimeout(0.5) 
             result = s.connect_ex((ip, port))
             if result == 0:
                 return port
@@ -56,7 +54,7 @@ class Scanner:
                 open_ports.append(port)
                 
         return open_ports    
-
+    @timer_deco    
     def discover_network(self, network: str):
         print(f"[*] Запускаю сканирование сети: {network}")
         net = ipaddress.ip_network(network, strict=False)
