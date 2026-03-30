@@ -1,5 +1,6 @@
 import argparse
 from scanner import Scanner
+from report import save_report
 
 
 def scan():
@@ -19,7 +20,8 @@ def scan():
     if args.command == "scan":
         print("Начинаю сканирование")
         s = Scanner()
-        s.discover_network(args.network)
+        data = s.discover_network(args.network)
+        save_report(data)
     elif args.command == "history":
         print("История не доступна")
 
