@@ -1,122 +1,136 @@
-# 🔍 NetSen — Network Sentinel
+# NetSen (Network Sentinel) 🕵️‍♂️
 
-Консольный сканер локальной сети на Python. Обнаруживает активные хосты, определяет MAC-адреса, производителей сетевых карт и открытые порты.
+**NetSen** is a lightweight and fast console-based local network scanner written in Python. The project was created for educational purposes to help users learn the principles of network protocols and the architecture of CLI applications.
 
----
+## 🚀 Features
 
-## ⚡ Установка
+* **Fast scanning:** Detects active hosts in a specified subnet.
+* **Generator-based approach:** Uses iterators to handle large networks without overloading RAM.
+* **Scan history:** Automatically saves results to a local SQLite database.
+* **Compliance with Linux standards:** Database and report files are saved in accordance with the XDG specification to the `~/.local/share/netsen/` directory.
+* **Installation as a CLI utility:** After installation, the direct system command `netsen` is available.
+
+## 🤖 Using AI in the project
+
+This project is a training ground. My goal as the author is not to mechanically memorize syntax, but to understand system architecture, network operations, and information security. 
+
+In this regard:
+* The scanning logic, tool selection, and overall concept were formulated by me.
+* Complex routine tasks (writing SQL queries for the database, setting up relative imports, configuring `pyproject.toml`, and handling paths in Linux) were generated using AI (Claude).
+* The project is used for reverse engineering: each line of generated code is analyzed and studied separately to understand the mechanics of the processes.
+
+
+## 📦 Installation
+
+To install the project, clone the repository and install it using `pip`:
 
 ```bash
-git clone https://github.com/ты/network_sentinel
-cd network_sentinel
+git clone [https://github.com/Algozak/NetSen.git](https://github.com/Algozak/NetSen.git)
+cd NetSen
 pip install -e .
-```
 
-После этого команда `netsen` доступна глобально.
 
----
 
-## 🚀 Использование
 
-```bash
-# Сканировать сеть
-netsen scan 192.168.1.0/24
 
-# С указанием конкретных портов
-netsen scan 192.168.1.0/24 --ports 22 80 443
 
-# История сканирований (в разработке)
-netsen history
-```
 
----
 
-## 📋 Пример вывода
 
-```
-[*] Запускаю сканирование сети: 192.168.1.0/24
-[*] Сканирую порты для 192.168.1.1...
-[+] Хост 192.168.1.1 в сети! | Его MAC-адрес - d8:47:32:aa:bb:cc
-Открытые порты: 80, 443 | (TP-Link)
-процесс выполнился за 12.43 сек.
-[!] Отчет сохранен в: ~/.local/share/netsen/reports/scan_report.json
-```
 
----
 
-## 🗂️ Формат отчёта
 
-Отчёт сохраняется в `~/.local/share/netsen/reports/scan_report.json`:
 
-```json
-{
-    "scan_info": {
-        "date": "2026-04-01 14:22:10",
-        "target_network": "192.168.1.1",
-        "total_hosts_found": 3
-    },
-    "hosts": [
-        {
-            "vendor": "TP-Link",
-            "ip": "192.168.1.1",
-            "mac": "d8:47:32:aa:bb:cc",
-            "ports": [80, 443]
-        }
-    ]
-}
-```
 
----
 
-## 📁 Структура проекта
 
-```
-network_sentinel/
-├── pyproject.toml
-├── README.md
-├── .gitignore
-└── src/
-    ├── __init__.py
-    ├── main.py        # CLI (argparse)
-    ├── scanner.py     # ping, MAC, порты
-    ├── vendor.py      # OUI → производитель
-    ├── report.py      # сохранение JSON
-    └── decos.py       # декоратор таймера
-```
 
----
 
-## 🔌 Порты по умолчанию
 
-`21` `22` `23` `25` `53` `80` `110` `135` `139` `443` `445` `3306` `3389` `8080`
 
----
 
-## ⚡ Производительность
 
-| Параметр | Значение |
-|---|---|
-| Потоков для ping | 50 |
-| Потоков для портов | 20 на хост |
-| Таймаут ping | 1 сек |
-| Таймаут порта | 0.5 сек |
 
-Можно изменить при создании объекта:
 
-```python
-s = Scanner(timeout=2.0, max_workers=100)
-```
 
----
 
-## 🛣️ Планы
 
-- [ ] История сканирований (`database.py`)
-- [ ] Передавать `target_network` в отчёт из аргументов CLI
-- [ ] Расширить базу OUI в `vendor.py`
 
----
 
-## ⚠️ Важно
 
-Используй только в сетях, к которым у тебя есть доступ.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
