@@ -13,3 +13,5 @@ reports/
 # Виртуальное окружение (если будешь использовать)
 .venv/
 venv/
+
+pyrightconfig.json

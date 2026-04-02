@@ -7,9 +7,13 @@ name = "netsen"
 version = "0.1.0"
 description = "Консольный сканер локальной сети"
 requires-python = ">=3.10"
+# Вот это самое важное: список сторонних библиотек
+dependencies = [
+    "manuf"
+]
 
 [project.scripts]
+# Убедись, что в main.py функция называется именно mainetsen = "src.main:main"
 netsen = "src.main:scan"
-
-[tool.setuptools.packages.find]   # ← добавь этот блок
+[tool.setuptools.packages.find]
 where = ["."]

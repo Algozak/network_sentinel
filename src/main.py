@@ -4,7 +4,10 @@ from .report import save_report
 
 
 def scan():
-    parser = argparse.ArgumentParser(description="Утилита для сканирования сети")
+    parser = argparse.ArgumentParser(
+        description="Использование: \nnetsen scan [IP-адрес]",
+        add_help=False
+    )
 
     subparsers = parser.add_subparsers(dest="command")
     
@@ -17,13 +20,23 @@ def scan():
     args = parser.parse_args()
 
 
-    if args.command == "scan":
-        print("Начинаю сканирование")
+    def cmd_scan(args):
         s = Scanner()
         data = s.discover_network(args.network)
         save_report(data)
-    elif args.command == "history":
+
+    def cmd_history(args):
         print("История не доступна")
 
+    COMMANDS = {
+        "scan": cmd_scan,
+        "history": cmd_history,
+    }
+
+    COMMANDS.get(args.command, lambda _: parser.print_help())(args)
+
+   
+
 if __name__ == "__main__":
+
     scan()
