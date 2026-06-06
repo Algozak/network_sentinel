@@ -25,6 +25,6 @@ In this regard:
 To install the project, clone the repository and install it using `pip`:
 
 ```bash
-git clone [https://github.com/Algozak/NetSen.git](https://github.com/Algozak/NetSen.git)
+git clone https://github.com/Algozak/NetSen.git
 cd NetSen
 pip install -e .
